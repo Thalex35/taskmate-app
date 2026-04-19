@@ -1,9 +1,14 @@
 :root {
+  /* Logo */
+  --logo_text_color: #2d986d;
+  --logo_background_color: #d9fef4;
+
   /* Colors pour le navbar et le menu */
   --header-menu_color: #ffffff;
   --header-menu_border_color: #72caa7;
   --btn_add_devoir_color: #2c867a;
   --background-menu_color: #f4fffb;
+  --profile_color: linear-gradient(#0c4830, #11cb81);
 
   /* Colors common */
   --pricipal_color: #f5fdfa;
@@ -11,4 +16,21 @@
   --btn_color: #2c867a;
   --btn_annuler: #f7fffe;
   --all_input_color: #e5fffe;
+
+  /* Dashboard */
+  --dashboard_cardNumber_color: #5dcaab;
+  --background_card_color: #a3c7b8;
+
+  /* card devoir */
+  --text_color: #030804;
+  --dateLimit_text_color: #870808;
+  --dateLimit_text_background: #4170dd;
+  --matiere_text_color: #d7def0;
+  --priorite_text_color: #9a7005;
+  --priorite_text_color: #e9e9c1;
+  --status_text_color: #063919;
+  --status_text_color: #effef5;
+  --btn_finish_background_color: #f1fffe;
+  --btn_finish_text_color: #030804;
+  --btn_finish_border_color: #008355;
 }
