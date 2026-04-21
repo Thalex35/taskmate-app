@@ -34,3 +34,7 @@
   --btn_finish_text_color: #030804;
   --btn_finish_border_color: #008355;
 }
+
+body {
+  background-color: var(--pricipal_color);
+}
