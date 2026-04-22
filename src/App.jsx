@@ -6,6 +6,7 @@ import Matieres from "./pages/Matieres.jsx";
 import Profile from "./pages/Profile.jsx";
 import SignUp from "./pages/SignUp.jsx";
 
+
 export default function App() {
   return (
     <BrowserRouter>

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
 import "../../styles/NavBar.css"
+
 
 export default function NavBar() {
 
@@ -16,12 +18,12 @@ export default function NavBar() {
 
 
       <div className="navbar-action">
-        <button>
-          className="navbar-btn-mode"
+        <button className="navbar-btn-mode"
           onClick={() => setModeSombre
-          (!modeSombre)}
+          (!modeSombre)}>
+          
 
-          {modeSombre ? "Mode clair" : "Mode sombre"}
+          {modeSombre ? <Sun /> : <Moon />}
         </button>
 
         <Link to= "/devoir/nouveau"
