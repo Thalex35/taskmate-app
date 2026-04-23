@@ -9,7 +9,8 @@ export default function NavBar() {
   return (
     <nav className="navbar">
       <Link to="/dashboard" className="navbar-logo">
-        <span className="logo-task">Task</span>
+        <span className="navbar-logo-task">Task</span>
+        <span className="navbar-logo-mate">Mate</span>
       </Link>
 
       <div className="navbar-action">
@@ -17,7 +18,11 @@ export default function NavBar() {
           className="navbar-btn-mode"
           onClick={() => setModeSombre(!modeSombre)}
         >
-          {modeSombre ? <Sun size={24} /> : <Moon size={24} />}
+          {modeSombre ? (
+            <Sun size={15} color="orange" />
+          ) : (
+            <Moon size={15} color="black" />
+          )}
         </button>
 
         <Link to="/devoir/nouveau" className="navbar-btn-nouveau">
