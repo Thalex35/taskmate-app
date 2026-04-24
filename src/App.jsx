@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout.jsx";
+import PretectedRoute from "./components/Layout/PretectedRoute.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Devoirs from "./pages/Devoirs.jsx";
 import Login from "./pages/Login.jsx";
@@ -13,44 +14,66 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route
           path="/dashboard"
           element={
-            <Layout>
-              <Dashboard />
-            </Layout>
+            <PretectedRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </PretectedRoute>
           }
         />
         <Route
           path="/devoirs"
           element={
-            <Layout>
-              <Devoirs />
-            </Layout>
+            <PretectedRoute>
+              <Layout>
+                <Devoirs />
+              </Layout>
+            </PretectedRoute>
           }
         />
         <Route
           path="/matieres"
           element={
-            <Layout>
-              <Matieres />
-            </Layout>
+            <PretectedRoute>
+              <Layout>
+                <Matieres />
+              </Layout>
+            </PretectedRoute>
           }
         />
         <Route
           path="/profile"
           element={
-            <Layout ShowAddBtn={false} showLogout={true}>
-              <Profile />
-            </Layout>
+            <PretectedRoute>
+              <Layout ShowAddBtn={false} showLogout={true}>
+                <Profile />
+              </Layout>
+            </PretectedRoute>
           }
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/new-devoir" element={<NewDevoir />} />
-        <Route path="/new-matieres" element={<NewMatieres />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route
+          path="/new-devoir"
+          element={
+            <PretectedRoute>
+              <NewDevoir />
+            </PretectedRoute>
+          }
+        />
+        <Route
+          path="/new-matieres"
+          element={
+            <PretectedRoute>
+              <NewMatieres />
+            </PretectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
