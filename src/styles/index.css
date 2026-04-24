@@ -1,4 +1,6 @@
 :root {
+  --navbar-height: 73px;
+
   /* Logo */
   --logo_text_color: #2d986d;
   --logo_background_color: #d9fef4;
@@ -41,4 +43,5 @@ body {
 
 .body_pages {
   display: flex;
+  min-height: calc(100vh - var(--navbar-height));
 }

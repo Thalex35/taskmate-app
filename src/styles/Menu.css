@@ -1,6 +1,6 @@
 .menu {
   width: 200px;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--navbar-height));
   background-color: #ffffff;
   border-right: 1px solid #e0f2ee;
   display: flex;
@@ -10,7 +10,7 @@
 }
 
 .menu-nav {
-  float: 1;
+  flex: 1;
   padding: 0 12px;
 }
 
