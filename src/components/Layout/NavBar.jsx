@@ -4,7 +4,11 @@ import { User } from "lucide-react";
 
 import "../../styles/NavBar.css";
 
-export default function NavBar({ ShowAddBtn = true, showLogout = false }) {
+export default function NavBar({
+  ShowAddBtn = true,
+  showLogout = false,
+  showMode = true,
+}) {
   const [modeSombre, setModeSombre] = useState(false);
 
   return (
@@ -15,12 +19,14 @@ export default function NavBar({ ShowAddBtn = true, showLogout = false }) {
       </Link>
 
       <div className="navbar-action">
-        <button
-          className="navbar-btn-mode"
-          onClick={() => setModeSombre(!modeSombre)}
-        >
-          {modeSombre ? "☀️ Mode clair" : "🌙 Mode sombre"}
-        </button>
+        {showMode && (
+          <button
+            className="navbar-btn-mode"
+            onClick={() => setModeSombre(!modeSombre)}
+          >
+            {modeSombre ? "☀️ Mode clair" : "🌙 Mode sombre"}
+          </button>
+        )}
 
         {showLogout ? (
           <Link to="/login" className="navbar-btn-logout">

@@ -49,7 +49,7 @@ export default function App() {
           path="/profile"
           element={
             <PretectedRoute>
-              <Layout ShowAddBtn={false} showLogout={true}>
+              <Layout ShowAddBtn={false} showLogout={true} showMode={false}>
                 <Profile />
               </Layout>
             </PretectedRoute>
@@ -61,7 +61,9 @@ export default function App() {
           path="/new-devoir"
           element={
             <PretectedRoute>
-              <NewDevoir />
+              <Layout ShowAddBtn={false} showMode={false}>
+                <NewDevoir />
+              </Layout>
             </PretectedRoute>
           }
         />
@@ -69,7 +71,9 @@ export default function App() {
           path="/new-matieres"
           element={
             <PretectedRoute>
-              <NewMatieres />
+              <Layout ShowAddBtn={false} showMode={false}>
+                <NewMatieres />
+              </Layout>
             </PretectedRoute>
           }
         />
