@@ -38,3 +38,7 @@
 body {
   background-color: var(--pricipal_color);
 }
+
+.body_pages {
+  display: flex;
+}

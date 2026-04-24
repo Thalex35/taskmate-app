@@ -42,22 +42,39 @@
 .navbar-action {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
 .navbar-btn-mode {
-  padding: 7px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 145px;
+  height: 40px;
+  padding: 0 16px;
   border-radius: 8px;
   border: 1px solid #1d9e75;
   background: transparent;
   color: #1d9e75;
   font-size: 14px;
+  white-space: nowrap;
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
 .navbar-btn-mode:hover {
   background-color: #e8f7f3;
+}
+
+.navbar-btn-logout {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background-color: #1d9e75;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.15s ease;
 }
 
 .navbar-btn-nouveau {
@@ -73,4 +90,20 @@
 
 .navbar-btn-nouveau:hover {
   background-color: #178a65;
+}
+
+.navbar-btn-profile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  background-color: #178a65;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }

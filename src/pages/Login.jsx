@@ -23,8 +23,8 @@ export default function Login() {
             type="email"
             id="email"
             name="email"
-            placeholder="theodore.louisjuste@gmail.com"
             required
+            placeholder="email@gmail.com"
           />
         </div>
 
