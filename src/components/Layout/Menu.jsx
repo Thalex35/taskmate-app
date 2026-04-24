@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { supabase } from "../../lib/supabase";
 import "../../styles/Menu.css";
 
 const menuSection = [
@@ -23,6 +25,28 @@ const menuSection = [
 
 export default function Menu() {
   const location = useLocation();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const { data, error } = await supabase.auth.getUser();
+
+      if (error) {
+        console.error("Erreur getUser:", error.message);
+      } else {
+        setUser(data.user);
+      }
+
+      setLoading(false);
+    }
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <div>Chargement...</div>;
+  }
 
   return (
     <aside className="menu">
@@ -47,9 +71,14 @@ export default function Menu() {
       </nav>
 
       <div className="menu-profil">
-        <div className="menu-avatar">TL</div>
+        <div className="menu-avatar">
+          {user?.user_metadata?.first_name?.charAt(0) +
+            user?.user_metadata?.last_name?.charAt(0) || "U"}
+        </div>
         <div className="menu-user-info">
-          <p className="menu-user-name">Theodore L.</p>
+          <p className="menu-user-name">
+            {user?.user_metadata?.first_name || "Utilisateur"}
+          </p>
           <p className="menu-user-role">Etudiant</p>
         </div>
       </div>

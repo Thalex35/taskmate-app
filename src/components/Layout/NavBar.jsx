@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { User } from "lucide-react";
+
 import "../../styles/NavBar.css";
 
 export default function NavBar({ ShowAddBtn = true, showLogout = false }) {
