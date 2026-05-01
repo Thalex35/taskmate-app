@@ -1,0 +1,71 @@
+.devoir-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+ 
+/* Filtres */
+.list-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+ 
+.filtre-search {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--header-menu_border_color);
+  background-color: var(--all_input_color);
+  font-size: 13px;
+  color: var(--text_color);
+  outline: none;
+  min-width: 150px;
+}
+ 
+.filtre-select {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--header-menu_border_color);
+  background-color: var(--all_input_color);
+  font-size: 13px;
+  color: var(--text_color);
+  cursor: pointer;
+  outline: none;
+}
+ 
+.filtre-reset {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--header-menu_border_color);
+  background-color: var(--btn_annuler);
+  color: var(--btn_color);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+ 
+.filtre-reset:hover {
+  background-color: var(--pricipal_color);
+}
+ 
+/* Grille de cartes */
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+ 
+@media (max-width: 600px) {
+  .list-grid {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+.list-empty {
+  color: var(--text_color);
+  font-size: 14px;
+  text-align: center;
+  grid-column: span 2;
+}
+ 
