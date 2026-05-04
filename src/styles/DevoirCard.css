@@ -40,9 +40,41 @@
 
 .card-icons {
   display: flex;
-  gap: 8px;
-  font-size: 14px;
+  gap: 6px;
+}
+
+.card-icon-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d8ebe6;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #2c867a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.card-icon-btn:hover,
+.card-icon-btn:focus-visible {
+  border-color: #2c867a;
+  background-color: #e8f7f3;
+  outline: none;
+}
+
+.card-icon-delete {
+  color: #c53a3a;
+}
+
+.card-icon-delete:hover,
+.card-icon-delete:focus-visible {
+  border-color: #f0b5b5;
+  background-color: #ffecec;
 }
 
 /* Badges */

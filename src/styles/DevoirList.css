@@ -89,6 +89,146 @@
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
 }
 
+.devoir-edit-modal,
+.devoir-confirm-modal {
+  width: min(100%, 560px);
+  max-height: min(760px, calc(100vh - 48px));
+  overflow: auto;
+  border: 1px solid var(--header-menu_border_color);
+  border-radius: 12px;
+  background-color: #ffffff;
+  padding: 20px;
+  color: var(--text_color);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+}
+
+.devoir-confirm-modal {
+  width: min(100%, 440px);
+}
+
+.devoir-confirm-modal h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.devoir-confirm-modal p {
+  margin: 0 0 24px;
+  color: #4b6258;
+  line-height: 1.5;
+}
+
+.devoir-edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+
+.devoir-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.devoir-edit-full {
+  grid-column: 1 / -1;
+}
+
+.devoir-edit-field span {
+  color: #517164;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.devoir-edit-field input,
+.devoir-edit-field select,
+.devoir-edit-field textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #9bbfb5;
+  border-radius: 9px;
+  background-color: var(--all_input_color);
+  color: var(--text_color);
+  font: inherit;
+  padding: 0 14px;
+  outline: none;
+}
+
+.devoir-edit-field textarea {
+  min-height: 76px;
+  resize: vertical;
+  padding-top: 12px;
+}
+
+.devoir-edit-field input:focus,
+.devoir-edit-field select:focus,
+.devoir-edit-field textarea:focus {
+  border-color: var(--btn_color);
+}
+
+.devoir-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.devoir-edit-actions .btn-annuler,
+.devoir-edit-actions .btn-soumettre {
+  min-width: 130px;
+  min-height: 42px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.devoir-edit-actions .btn-annuler {
+  border: 1px solid var(--header-menu_border_color);
+  background-color: var(--btn_annuler);
+  color: var(--text_color);
+}
+
+.devoir-edit-actions .btn-soumettre {
+  border: none;
+  background-color: var(--btn_add_devoir_color);
+  color: #ffffff;
+}
+
+.devoir-edit-actions .btn-annuler:hover {
+  background-color: #eefdfa;
+}
+
+.devoir-edit-actions .btn-soumettre:hover {
+  background-color: #24766d;
+}
+
+.devoir-edit-actions .btn-soumettre:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.btn-delete-confirm {
+  min-width: 130px;
+  min-height: 42px;
+  border: none;
+  border-radius: 8px;
+  background-color: #c53a3a;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-delete-confirm:hover {
+  background-color: #a92f2f;
+}
+
+.btn-delete-confirm:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
 .devoir-detail-header {
   display: flex;
   align-items: flex-start;
@@ -97,9 +237,18 @@
   margin-bottom: 24px;
 }
 
+.devoir-edit-modal .devoir-detail-header {
+  margin-bottom: 16px;
+}
+
 .devoir-detail-header h2 {
   margin: 0 0 12px;
   font-size: 24px;
+}
+
+.devoir-edit-modal .devoir-detail-header h2 {
+  margin: 0;
+  font-size: 20px;
 }
 
 .devoir-detail-badges {
@@ -190,5 +339,19 @@
 
   .devoir-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .devoir-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .devoir-edit-actions {
+    flex-direction: column;
+  }
+
+  .devoir-edit-actions .btn-annuler,
+  .devoir-edit-actions .btn-soumettre,
+  .btn-delete-confirm {
+    width: 100%;
   }
 }

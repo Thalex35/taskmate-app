@@ -31,6 +31,18 @@ function afficherStatut(statut) {
   return "A faire";
 }
 
+function valeurPriorite(priorite) {
+  if (priorite === "Haute") return "haute";
+  if (priorite === "Basse") return "basse";
+  return "moyenne";
+}
+
+function valeurStatut(statut) {
+  if (statut === "Termine") return "termine";
+  if (statut === "En cours") return "en_cours";
+  return "a_faire";
+}
+
 function getPrioriteClass(priorite) {
   if (priorite === "Haute") return "badge badge-haute";
   if (priorite === "Basse") return "badge badge-basse";
@@ -48,9 +60,12 @@ function formatDevoir(devoir) {
     id: devoir.id,
     titre: devoir.titre,
     description: devoir.description,
+    matiereId: devoir.matiere_id,
     matiere: devoir.matieres?.nom || "Sans matiere",
     priorite: afficherPriorite(devoir.priorite),
+    prioriteValue: devoir.priorite,
     statut: afficherStatut(devoir.statut),
+    statutValue: devoir.statut,
     dateLimit: devoir.date_limite,
     joursRestants: calculerJoursRestants(devoir.date_limite),
   };
@@ -65,6 +80,19 @@ export default function DevoirList() {
   const [filtreStatut, setFiltreStatut] = useState("Tous");
   const [filtrePriorite, setFiltrePriorite] = useState("Toutes");
   const [selectedDevoir, setSelectedDevoir] = useState(null);
+  const [matieresOptions, setMatieresOptions] = useState([]);
+  const [devoirEnEdition, setDevoirEnEdition] = useState(null);
+  const [editForm, setEditForm] = useState({
+    titre: "",
+    matiereId: "",
+    priorite: "moyenne",
+    statut: "a_faire",
+    dateLimite: "",
+    description: "",
+  });
+  const [devoirASupprimer, setDevoirASupprimer] = useState(null);
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     async function fetchDevoirs() {
@@ -76,6 +104,7 @@ export default function DevoirList() {
         .select(
           `
           id,
+          matiere_id,
           titre,
           description,
           date_limite,
@@ -89,11 +118,22 @@ export default function DevoirList() {
         )
         .order("date_limite", { ascending: true });
 
+      const { data: matieresData, error: matieresError } = await supabase
+        .from("matieres")
+        .select("id, nom")
+        .order("nom", { ascending: true });
+
       if (error) {
         console.error("Erreur fetch devoirs:", error.message);
         setErrorMessage("Impossible de charger les devoirs.");
       } else {
         setDevoirs(data.map(formatDevoir));
+      }
+
+      if (matieresError) {
+        console.error("Erreur fetch matieres:", matieresError.message);
+      } else {
+        setMatieresOptions(matieresData || []);
       }
 
       setLoading(false);
@@ -122,8 +162,115 @@ export default function DevoirList() {
     }
 
     setDevoirs((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, statut: "Termine" } : d))
+      prev.map((d) =>
+        d.id === id
+          ? { ...d, statut: "Termine", statutValue: "termine" }
+          : d
+      )
     );
+  };
+
+  const ouvrirEdition = (devoir) => {
+    setSelectedDevoir(null);
+    setDevoirEnEdition(devoir);
+    setEditForm({
+      titre: devoir.titre,
+      matiereId: devoir.matiereId || "",
+      priorite: devoir.prioriteValue || valeurPriorite(devoir.priorite),
+      statut: devoir.statutValue || valeurStatut(devoir.statut),
+      dateLimite: devoir.dateLimit,
+      description: devoir.description || "",
+    });
+  };
+
+  const handleEditChange = (event) => {
+    const { name, value } = event.target;
+    setEditForm((prev) => ({ ...prev, [name]: value }));
+    setErrorMessage("");
+  };
+
+  const fermerEdition = () => {
+    setDevoirEnEdition(null);
+    setSavingEdit(false);
+  };
+
+  const enregistrerModification = async (event) => {
+    event.preventDefault();
+    setSavingEdit(true);
+    setErrorMessage("");
+
+    const payload = {
+      titre: editForm.titre.trim(),
+      matiere_id: editForm.matiereId || null,
+      priorite: editForm.priorite,
+      statut: editForm.statut,
+      date_limite: editForm.dateLimite,
+      description: editForm.description.trim() || null,
+    };
+
+    const { error } = await supabase
+      .from("devoirs")
+      .update(payload)
+      .eq("id", devoirEnEdition.id);
+
+    if (error) {
+      console.error("Erreur update devoir:", error.message);
+      setErrorMessage("Impossible de modifier le devoir.");
+      setSavingEdit(false);
+      return;
+    }
+
+    const matiere = matieresOptions.find((m) => m.id === editForm.matiereId);
+
+    setDevoirs((prev) =>
+      prev.map((devoir) =>
+        devoir.id === devoirEnEdition.id
+          ? {
+              ...devoir,
+              titre: payload.titre,
+              description: payload.description,
+              matiereId: payload.matiere_id,
+              matiere: matiere?.nom || "Sans matiere",
+              priorite: afficherPriorite(payload.priorite),
+              prioriteValue: payload.priorite,
+              statut: afficherStatut(payload.statut),
+              statutValue: payload.statut,
+              dateLimit: payload.date_limite,
+              joursRestants: calculerJoursRestants(payload.date_limite),
+            }
+          : devoir
+      )
+    );
+
+    fermerEdition();
+  };
+
+  const ouvrirSuppression = (devoir) => {
+    setSelectedDevoir(null);
+    setDevoirASupprimer(devoir);
+  };
+
+  const supprimerDevoir = async () => {
+    setDeleting(true);
+    setErrorMessage("");
+
+    const { error } = await supabase
+      .from("devoirs")
+      .delete()
+      .eq("id", devoirASupprimer.id);
+
+    if (error) {
+      console.error("Erreur delete devoir:", error.message);
+      setErrorMessage("Impossible de supprimer le devoir.");
+      setDeleting(false);
+      return;
+    }
+
+    setDevoirs((prev) =>
+      prev.filter((devoir) => devoir.id !== devoirASupprimer.id)
+    );
+    setDevoirASupprimer(null);
+    setDeleting(false);
   };
 
   const devoirsFiltres = devoirs.filter((d) => {
@@ -212,12 +359,161 @@ export default function DevoirList() {
               devoir={devoir}
               onMarquerTermine={marquerTermine}
               onSelect={setSelectedDevoir}
+              onEdit={ouvrirEdition}
+              onDelete={ouvrirSuppression}
             />
           ))
         ) : (
           <p className="list-empty">Aucun devoir trouve.</p>
         )}
       </div>
+
+      {devoirEnEdition && (
+        <div className="devoir-detail-backdrop" onClick={fermerEdition}>
+          <form
+            className="devoir-edit-modal"
+            onSubmit={enregistrerModification}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="devoir-detail-header">
+              <h2>Modifier le devoir</h2>
+              <button
+                type="button"
+                className="devoir-detail-close"
+                onClick={fermerEdition}
+                aria-label="Fermer"
+              >
+                X
+              </button>
+            </div>
+
+            <div className="devoir-edit-grid">
+              <label className="devoir-edit-field">
+                <span>Titre</span>
+                <input
+                  type="text"
+                  name="titre"
+                  value={editForm.titre}
+                  onChange={handleEditChange}
+                  required
+                />
+              </label>
+
+              <label className="devoir-edit-field">
+                <span>Matiere</span>
+                <select
+                  name="matiereId"
+                  value={editForm.matiereId}
+                  onChange={handleEditChange}
+                  required
+                >
+                  <option value="">Choisir une matiere</option>
+                  {matieresOptions.map((matiere) => (
+                    <option key={matiere.id} value={matiere.id}>
+                      {matiere.nom}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="devoir-edit-field">
+                <span>Date limite</span>
+                <input
+                  type="date"
+                  name="dateLimite"
+                  value={editForm.dateLimite}
+                  onChange={handleEditChange}
+                  required
+                />
+              </label>
+
+              <label className="devoir-edit-field">
+                <span>Priorite</span>
+                <select
+                  name="priorite"
+                  value={editForm.priorite}
+                  onChange={handleEditChange}
+                  required
+                >
+                  <option value="haute">Haute</option>
+                  <option value="moyenne">Moyenne</option>
+                  <option value="basse">Basse</option>
+                </select>
+              </label>
+
+              <label className="devoir-edit-field">
+                <span>Statut</span>
+                <select
+                  name="statut"
+                  value={editForm.statut}
+                  onChange={handleEditChange}
+                  required
+                >
+                  <option value="a_faire">A faire</option>
+                  <option value="en_cours">En cours</option>
+                  <option value="termine">Termine</option>
+                </select>
+              </label>
+
+              <label className="devoir-edit-field devoir-edit-full">
+                <span>Description</span>
+                <textarea
+                  name="description"
+                  value={editForm.description}
+                  onChange={handleEditChange}
+                  placeholder="Instructions, details..."
+                />
+              </label>
+            </div>
+
+            <div className="devoir-edit-actions">
+              <button type="button" className="btn-annuler" onClick={fermerEdition}>
+                Annuler
+              </button>
+              <button type="submit" className="btn-soumettre" disabled={savingEdit}>
+                {savingEdit ? "Enregistrement..." : "Enregistrer"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {devoirASupprimer && (
+        <div
+          className="devoir-detail-backdrop"
+          onClick={() => setDevoirASupprimer(null)}
+        >
+          <section
+            className="devoir-confirm-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="delete-title">Supprimer ce devoir ?</h2>
+            <p>
+              Cette action supprimera "{devoirASupprimer.titre}" de ta liste.
+            </p>
+            <div className="devoir-edit-actions">
+              <button
+                type="button"
+                className="btn-annuler"
+                onClick={() => setDevoirASupprimer(null)}
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                className="btn-delete-confirm"
+                onClick={supprimerDevoir}
+                disabled={deleting}
+              >
+                {deleting ? "Suppression..." : "Supprimer"}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
 
       {selectedDevoir && (
         <div

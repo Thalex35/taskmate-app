@@ -8,6 +8,8 @@ export default function Matieres() {
   const [matieres, setMatieres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [matiereASupprimer, setMatiereASupprimer] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     async function fetchMatieres() {
@@ -28,17 +30,26 @@ export default function Matieres() {
     fetchMatieres();
   }, []);
 
-  async function handleDeleteMatiere(id) {
-    const { error } = await supabase.from("matieres").delete().eq("id", id);
+  async function handleDeleteMatiere() {
+    setDeleting(true);
+    setErrorMessage("");
+
+    const { error } = await supabase
+      .from("matieres")
+      .delete()
+      .eq("id", matiereASupprimer.id);
 
     if (error) {
       setErrorMessage(error.message);
+      setDeleting(false);
       return;
     }
 
     setMatieres((currentMatieres) =>
-      currentMatieres.filter((matiere) => matiere.id !== id),
+      currentMatieres.filter((matiere) => matiere.id !== matiereASupprimer.id),
     );
+    setMatiereASupprimer(null);
+    setDeleting(false);
   }
 
   if (loading) {
@@ -51,11 +62,52 @@ export default function Matieres() {
 
       {errorMessage && <p className="matieresPage__error">{errorMessage}</p>}
 
-      <MatieresList matieres={matieres} onDeleteMatiere={handleDeleteMatiere} />
+      <MatieresList
+        matieres={matieres}
+        onDeleteMatiere={setMatiereASupprimer}
+      />
 
       <Link className="matieresPage__add" to="/new-matieres">
         + Ajouter une matiere
       </Link>
+
+      {matiereASupprimer && (
+        <div
+          className="matiere-confirm-backdrop"
+          onClick={() => setMatiereASupprimer(null)}
+        >
+          <section
+            className="matiere-confirm-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="matiere-delete-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="matiere-delete-title">Supprimer cette matiere ?</h2>
+            <p>
+              Cette action supprimera "{matiereASupprimer.nom}" de ta liste.
+            </p>
+
+            <div className="matiere-confirm-actions">
+              <button
+                type="button"
+                className="matiere-confirm-cancel"
+                onClick={() => setMatiereASupprimer(null)}
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                className="matiere-confirm-delete"
+                onClick={handleDeleteMatiere}
+                disabled={deleting}
+              >
+                {deleting ? "Suppression..." : "Supprimer"}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function MatieresList({ matieres, onDeleteMatiere }) {
         <MatieresCard
           key={matiere.id}
           matiere={matiere}
-          onDelete={() => onDeleteMatiere(matiere.id)}
+          onDelete={() => onDeleteMatiere(matiere)}
         />
       ))}
     </div>
