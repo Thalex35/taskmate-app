@@ -140,8 +140,11 @@ export default function DevoirForm() {
             onChange={handleChange}
             placeholder="Exercices chapitre 5"
             className={`form-input ${erreurs.titre ? "input-erreur" : ""}`}
+            required
           />
-          {erreurs.titre && <span className="form-erreur">{erreurs.titre}</span>}
+          {erreurs.titre && (
+            <span className="form-erreur">{erreurs.titre}</span>
+          )}
         </div>
 
         <div className="form-grid">
@@ -186,6 +189,7 @@ export default function DevoirForm() {
               className={`form-input ${
                 erreurs.dateLimite ? "input-erreur" : ""
               }`}
+              required
             />
             {erreurs.dateLimite && (
               <span className="form-erreur">{erreurs.dateLimite}</span>
@@ -202,6 +206,7 @@ export default function DevoirForm() {
               value={form.priorite}
               onChange={handleChange}
               className={`form-input ${erreurs.priorite ? "input-erreur" : ""}`}
+              required
             >
               {priorites.map((priorite) => (
                 <option key={priorite.value} value={priorite.value}>
@@ -224,6 +229,7 @@ export default function DevoirForm() {
               value={form.statut}
               onChange={handleChange}
               className={`form-input ${erreurs.statut ? "input-erreur" : ""}`}
+              required
             >
               {statuts.map((statut) => (
                 <option key={statut.value} value={statut.value}>

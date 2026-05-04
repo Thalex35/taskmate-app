@@ -60,6 +60,110 @@
   margin-top: 48px;
 }
 
+.dashboard-urgent-list {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.dashboard-urgent-card {
+  display: flex;
+  min-height: 164px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border: 1px solid #dbe7e3;
+  border-left: 4px solid #ff6b35;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(33, 86, 72, 0.06);
+}
+
+.dashboard-urgent-card.is-today {
+  border-left-color: #ff3b3b;
+}
+
+.dashboard-urgent-card.is-soon {
+  border-left-color: #ff7a1a;
+}
+
+.dashboard-urgent-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dashboard-urgent-title {
+  margin: 0;
+  color: var(--text_color);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.dashboard-urgent-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dashboard-urgent-subject,
+.dashboard-urgent-priority,
+.dashboard-urgent-status,
+.dashboard-urgent-deadline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dashboard-urgent-subject {
+  background: #c9f6ed;
+  color: #006653;
+}
+
+.dashboard-urgent-priority {
+  background: #ffe9eb;
+  color: #cf293c;
+}
+
+.dashboard-urgent-status {
+  background: #f0f4f8;
+  color: #52647a;
+}
+
+.dashboard-urgent-deadline {
+  flex-shrink: 0;
+  background: #fff6e7;
+  color: #e07800;
+}
+
+.dashboard-urgent-card.is-today .dashboard-urgent-deadline {
+  background: #ffe8e8;
+  color: #ff3030;
+}
+
+.dashboard-urgent-date {
+  margin: 0;
+  color: #7990b5;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dashboard-urgent-empty {
+  margin: 18px 0 0;
+  color: var(--text_color);
+  opacity: 0.75;
+  font-size: 15px;
+}
+
 .h3_btn {
   display: flex;
   align-items: center;
@@ -112,6 +216,14 @@
 
   .h3_btn {
     align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-urgent-list {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-urgent-header {
     flex-direction: column;
   }
 }

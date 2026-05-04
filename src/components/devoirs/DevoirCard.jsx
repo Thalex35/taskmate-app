@@ -1,6 +1,13 @@
+import { Pencil, Trash2 } from "lucide-react";
 import "../../styles/DevoirCard.css";
 
-export default function DevoirCard({ devoir, onMarquerTermine, onSelect }) {
+export default function DevoirCard({
+  devoir,
+  onMarquerTermine,
+  onSelect,
+  onEdit,
+  onDelete,
+}) {
   const { id, titre, matiere, priorite, statut, dateLimit, joursRestants } =
     devoir;
 
@@ -40,8 +47,24 @@ export default function DevoirCard({ devoir, onMarquerTermine, onSelect }) {
       <div className="card-header">
         <h3 className="card-titre">{titre}</h3>
         <div className="card-icons" onClick={(event) => event.stopPropagation()}>
-          <span>Modifier</span>
-          <span>Supprimer</span>
+          <button
+            type="button"
+            className="card-icon-btn"
+            onClick={() => onEdit(devoir)}
+            aria-label={`Modifier ${titre}`}
+            title="Modifier"
+          >
+            <Pencil size={16} strokeWidth={2.2} />
+          </button>
+          <button
+            type="button"
+            className="card-icon-btn card-icon-delete"
+            onClick={() => onDelete(devoir)}
+            aria-label={`Supprimer ${titre}`}
+            title="Supprimer"
+          >
+            <Trash2 size={16} strokeWidth={2.2} />
+          </button>
         </div>
       </div>
 

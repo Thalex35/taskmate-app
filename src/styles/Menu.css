@@ -1,45 +1,48 @@
 .menu {
-  width: 200px;
+  width: 248px;
+  flex: 0 0 248px;
   min-height: calc(100vh - var(--navbar-height));
   background-color: #ffffff;
   border-right: 1px solid #e0f2ee;
   display: flex;
   flex-direction: column;
-  padding-top: 24px;
+  padding-top: 28px;
   font-family: sans-serif;
 }
 
 .menu-nav {
   flex: 1;
-  padding: 0 12px;
+  padding: 0 18px;
 }
 
 .menu-section {
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 
 .menu-section-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   color: #2d986d;
   text-transform: uppercase;
-  padding: 0 8px;
-  margin: 16px 0 6px;
+  padding: 0 10px;
+  margin: 16px 0 8px;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 10px;
   background: transparent;
   color: #333333;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   transition:
     background 0.15s ease,
     color 0.15s ease;
@@ -66,27 +69,27 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
+  padding: 18px;
   border-top: 1px solid #e0f2ee;
   margin-top: auto;
 }
 
 .menu-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background-color: #1d9e75;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   flex-shrink: 0;
 }
 
 .menu-user-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   margin: 0;
@@ -96,4 +99,15 @@
   font-size: 12px;
   color: #888888;
   margin: 0;
+}
+
+@media (max-width: 900px) {
+  .menu {
+    width: 220px;
+    flex-basis: 220px;
+  }
+
+  .menu-nav {
+    padding: 0 12px;
+  }
 }
