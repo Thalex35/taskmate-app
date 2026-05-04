@@ -47,13 +47,13 @@ export default function Dashboard() {
 
   const totalDevoirs = devoirs.length;
   const devoirsAFaire = devoirs.filter(
-    (devoir) => normaliserStatut(devoir.statut) === "a_faire"
+    (devoir) => normaliserStatut(devoir.statut) === "a_faire",
   ).length;
   const devoirsEnCours = devoirs.filter(
-    (devoir) => normaliserStatut(devoir.statut) === "en_cours"
+    (devoir) => normaliserStatut(devoir.statut) === "en_cours",
   ).length;
   const devoirsTermines = devoirs.filter(
-    (devoir) => normaliserStatut(devoir.statut) === "termine"
+    (devoir) => normaliserStatut(devoir.statut) === "termine",
   ).length;
 
   if (loading) {
@@ -95,6 +95,7 @@ export default function Dashboard() {
             </button>
           </Link>
         </div>
+        <div></div>
       </div>
     </section>
   );
