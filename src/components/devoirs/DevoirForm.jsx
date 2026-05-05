@@ -10,9 +10,9 @@ const priorites = [
 ];
 
 const statuts = [
-  { label: "A faire", value: "a_faire" },
+  { label: "À faire", value: "a_faire" },
   { label: "En cours", value: "en_cours" },
-  { label: "Termine", value: "termine" },
+  { label: "Terminé", value: "termine" },
 ];
 
 export default function DevoirForm() {
@@ -34,9 +34,21 @@ export default function DevoirForm() {
 
   useEffect(() => {
     async function fetchMatieres() {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        setErrorMessage("Utilisateur non connecté.");
+        setLoadingMatieres(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from("matieres")
         .select("id, nom")
+        .eq("user_id", user.id)
         .order("nom", { ascending: true });
 
       if (error) {
@@ -66,8 +78,8 @@ export default function DevoirForm() {
     const nouvellesErreurs = {};
 
     if (!form.titre.trim()) nouvellesErreurs.titre = "Le titre est requis.";
-    if (!form.matiereId) nouvellesErreurs.matiereId = "La matiere est requise.";
-    if (!form.priorite) nouvellesErreurs.priorite = "La priorite est requise.";
+    if (!form.matiereId) nouvellesErreurs.matiereId = "La matière est requise.";
+    if (!form.priorite) nouvellesErreurs.priorite = "La priorité est requise.";
     if (!form.statut) nouvellesErreurs.statut = "Le statut est requis.";
     if (!form.dateLimite)
       nouvellesErreurs.dateLimite = "La date limite est requise.";
@@ -93,7 +105,7 @@ export default function DevoirForm() {
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      setErrorMessage("Utilisateur non connecte.");
+      setErrorMessage("Utilisateur non connecté.");
       setLoadingSubmit(false);
       return;
     }
@@ -150,7 +162,7 @@ export default function DevoirForm() {
         <div className="form-grid">
           <div className="form-group">
             <label className="form-label" htmlFor="matiereId">
-              MATIERE
+              MATIÈRE
             </label>
             <select
               id="matiereId"
@@ -163,7 +175,7 @@ export default function DevoirForm() {
               }`}
             >
               <option value="">
-                {loadingMatieres ? "Chargement..." : "Choisir une matiere"}
+                {loadingMatieres ? "Chargement..." : "Choisir une matière"}
               </option>
               {matieres.map((matiere) => (
                 <option key={matiere.id} value={matiere.id}>
@@ -198,7 +210,7 @@ export default function DevoirForm() {
 
           <div className="form-group">
             <label className="form-label" htmlFor="priorite">
-              PRIORITE
+              PRIORITÉ
             </label>
             <select
               id="priorite"
@@ -252,7 +264,7 @@ export default function DevoirForm() {
             name="description"
             value={form.description}
             onChange={handleChange}
-            placeholder="Instructions, details..."
+            placeholder="Instructions, détails..."
             className="form-input form-textarea"
           />
         </div>

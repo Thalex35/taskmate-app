@@ -24,11 +24,11 @@ function afficherPriorite(priorite) {
 function afficherStatut(statut) {
   const value = statut?.toLowerCase();
 
-  if (["termine", "done"].includes(value)) return "Termine";
+  if (["termine", "done"].includes(value)) return "Terminé";
   if (["en_cours", "en cours", "in progress"].includes(value))
     return "En cours";
 
-  return "A faire";
+  return "À faire";
 }
 
 function valeurPriorite(priorite) {
@@ -38,7 +38,7 @@ function valeurPriorite(priorite) {
 }
 
 function valeurStatut(statut) {
-  if (statut === "Termine") return "termine";
+  if (statut === "Terminé") return "termine";
   if (statut === "En cours") return "en_cours";
   return "a_faire";
 }
@@ -50,7 +50,7 @@ function getPrioriteClass(priorite) {
 }
 
 function getStatutClass(statut) {
-  if (statut === "Termine") return "badge badge-termine";
+  if (statut === "Terminé") return "badge badge-termine";
   if (statut === "En cours") return "badge badge-encours";
   return "badge badge-afaire";
 }
@@ -61,7 +61,7 @@ function formatDevoir(devoir) {
     titre: devoir.titre,
     description: devoir.description,
     matiereId: devoir.matiere_id,
-    matiere: devoir.matieres?.nom || "Sans matiere",
+    matiere: devoir.matieres?.nom || "Sans matière",
     priorite: afficherPriorite(devoir.priorite),
     prioriteValue: devoir.priorite,
     statut: afficherStatut(devoir.statut),
@@ -99,6 +99,17 @@ export default function DevoirList() {
       setLoading(true);
       setErrorMessage("");
 
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        setErrorMessage("Utilisateur non connecté.");
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from("devoirs")
         .select(
@@ -116,11 +127,13 @@ export default function DevoirList() {
           )
         `
         )
+        .eq("user_id", user.id)
         .order("date_limite", { ascending: true });
 
       const { data: matieresData, error: matieresError } = await supabase
         .from("matieres")
         .select("id, nom")
+        .eq("user_id", user.id)
         .order("nom", { ascending: true });
 
       if (error) {
@@ -146,7 +159,7 @@ export default function DevoirList() {
     () => ["Toutes", ...new Set(devoirs.map((d) => d.matiere))],
     [devoirs]
   );
-  const statuts = ["Tous", "A faire", "En cours", "Termine"];
+  const statuts = ["Tous", "À faire", "En cours", "Terminé"];
   const priorites = ["Toutes", "Haute", "Moyenne", "Basse"];
 
   const marquerTermine = async (id) => {
@@ -157,14 +170,14 @@ export default function DevoirList() {
 
     if (error) {
       console.error("Erreur update devoir:", error.message);
-      setErrorMessage("Impossible de mettre le devoir a jour.");
+      setErrorMessage("Impossible de mettre le devoir à jour.");
       return;
     }
 
     setDevoirs((prev) =>
       prev.map((d) =>
         d.id === id
-          ? { ...d, statut: "Termine", statutValue: "termine" }
+          ? { ...d, statut: "Terminé", statutValue: "termine" }
           : d
       )
     );
@@ -230,7 +243,7 @@ export default function DevoirList() {
               titre: payload.titre,
               description: payload.description,
               matiereId: payload.matiere_id,
-              matiere: matiere?.nom || "Sans matiere",
+              matiere: matiere?.nom || "Sans matière",
               priorite: afficherPriorite(payload.priorite),
               prioriteValue: payload.priorite,
               statut: afficherStatut(payload.statut),
@@ -317,7 +330,7 @@ export default function DevoirList() {
         >
           {matieres.map((m) => (
             <option key={m} value={m}>
-              {m === "Toutes" ? "Toutes les matieres" : m}
+              {m === "Toutes" ? "Toutes les matières" : m}
             </option>
           ))}
         </select>
@@ -341,7 +354,7 @@ export default function DevoirList() {
         >
           {priorites.map((p) => (
             <option key={p} value={p}>
-              {p === "Toutes" ? "Priorite" : p}
+              {p === "Toutes" ? "Priorité" : p}
             </option>
           ))}
         </select>
@@ -364,7 +377,7 @@ export default function DevoirList() {
             />
           ))
         ) : (
-          <p className="list-empty">Aucun devoir trouve.</p>
+          <p className="list-empty">Aucun devoir trouvé.</p>
         )}
       </div>
 
@@ -400,14 +413,14 @@ export default function DevoirList() {
               </label>
 
               <label className="devoir-edit-field">
-                <span>Matiere</span>
+                <span>Matière</span>
                 <select
                   name="matiereId"
                   value={editForm.matiereId}
                   onChange={handleEditChange}
                   required
                 >
-                  <option value="">Choisir une matiere</option>
+                  <option value="">Choisir une matière</option>
                   {matieresOptions.map((matiere) => (
                     <option key={matiere.id} value={matiere.id}>
                       {matiere.nom}
@@ -428,7 +441,7 @@ export default function DevoirList() {
               </label>
 
               <label className="devoir-edit-field">
-                <span>Priorite</span>
+                <span>Priorité</span>
                 <select
                   name="priorite"
                   value={editForm.priorite}
@@ -449,9 +462,9 @@ export default function DevoirList() {
                   onChange={handleEditChange}
                   required
                 >
-                  <option value="a_faire">A faire</option>
+                  <option value="a_faire">À faire</option>
                   <option value="en_cours">En cours</option>
-                  <option value="termine">Termine</option>
+                  <option value="termine">Terminé</option>
                 </select>
               </label>
 
@@ -461,7 +474,7 @@ export default function DevoirList() {
                   name="description"
                   value={editForm.description}
                   onChange={handleEditChange}
-                  placeholder="Instructions, details..."
+                  placeholder="Instructions, détails..."
                 />
               </label>
             </div>

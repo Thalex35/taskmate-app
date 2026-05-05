@@ -88,7 +88,7 @@ export default function Login() {
 
         <div className="login__actions">
           <button className="login__button" type="submit" disabled={loading}>
-            {loading ? "Connection..." : "Se connecter"}
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
 
           <div className="login__signup-link">

@@ -13,17 +13,59 @@ export default function Matieres() {
 
   useEffect(() => {
     async function fetchMatieres() {
-      const { data, error } = await supabase
-        .from("matieres")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
 
-      if (error) {
-        setErrorMessage(error.message);
-      } else {
-        setMatieres(data);
+      if (userError || !user) {
+        setErrorMessage("Utilisateur non connecté.");
+        setLoading(false);
+        return;
       }
 
+      const { data: matieresData, error: matieresError } = await supabase
+        .from("matieres")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      const { data: devoirsData, error: devoirsError } = await supabase
+        .from("devoirs")
+        .select("matiere_id, statut")
+        .eq("user_id", user.id);
+
+      if (matieresError || devoirsError) {
+        setErrorMessage(matieresError?.message || devoirsError.message);
+        setLoading(false);
+        return;
+      }
+
+      const statsParMatiere = (devoirsData || []).reduce((stats, devoir) => {
+        if (!devoir.matiere_id) return stats;
+
+        const currentStats = stats[devoir.matiere_id] || {
+          totalDevoirs: 0,
+          devoirsTermines: 0,
+        };
+
+        currentStats.totalDevoirs += 1;
+
+        if (devoir.statut === "termine") {
+          currentStats.devoirsTermines += 1;
+        }
+
+        stats[devoir.matiere_id] = currentStats;
+        return stats;
+      }, {});
+
+      setMatieres(
+        (matieresData || []).map((matiere) => ({
+          ...matiere,
+          totalDevoirs: statsParMatiere[matiere.id]?.totalDevoirs || 0,
+          devoirsTermines: statsParMatiere[matiere.id]?.devoirsTermines || 0,
+        })),
+      );
       setLoading(false);
     }
 
@@ -53,12 +95,12 @@ export default function Matieres() {
   }
 
   if (loading) {
-    return <p className="matieresPage__loading">Chargement des matieres...</p>;
+    return <p className="matieresPage__loading">Chargement des matières...</p>;
   }
 
   return (
     <div className="matieresPage">
-      <h1>Mes matieres</h1>
+      <h1>Mes matières</h1>
 
       {errorMessage && <p className="matieresPage__error">{errorMessage}</p>}
 
@@ -68,7 +110,7 @@ export default function Matieres() {
       />
 
       <Link className="matieresPage__add" to="/new-matieres">
-        + Ajouter une matiere
+        + Ajouter une matière
       </Link>
 
       {matiereASupprimer && (
@@ -83,7 +125,7 @@ export default function Matieres() {
             aria-labelledby="matiere-delete-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="matiere-delete-title">Supprimer cette matiere ?</h2>
+            <h2 id="matiere-delete-title">Supprimer cette matière ?</h2>
             <p>
               Cette action supprimera "{matiereASupprimer.nom}" de ta liste.
             </p>

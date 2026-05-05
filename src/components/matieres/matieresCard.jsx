@@ -2,6 +2,10 @@ import { Trash } from "lucide-react";
 import "../../styles/matiereCard.css";
 
 export default function MatieresCard({ matiere, onDelete }) {
+  const totalDevoirs = matiere.totalDevoirs || 0;
+  const devoirsTermines = matiere.devoirsTermines || 0;
+  const devoirLabel = totalDevoirs > 1 ? "devoirs" : "devoir";
+
   const initials = matiere.nom
     .split(" ")
     .filter(Boolean)
@@ -20,7 +24,10 @@ export default function MatieresCard({ matiere, onDelete }) {
 
       <div className="cardMat__content">
         <h2>{matiere.nom}</h2>
-        <p>0 devoir - 0 termine</p>
+        <p>
+          {totalDevoirs} {devoirLabel} - {devoirsTermines} terminé
+          {devoirsTermines > 1 ? "s" : ""}
+        </p>
       </div>
 
       <button className="cardMat__delete" type="button" onClick={onDelete}>

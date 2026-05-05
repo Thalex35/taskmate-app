@@ -151,7 +151,7 @@ export default function Profile() {
             <p>{user.email}</p>
 
             <div className="profile-tags">
-              <span>Etudiant</span>
+              <span>Étudiant</span>
               <span>{university}</span>
             </div>
           </div>

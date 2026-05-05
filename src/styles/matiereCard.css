@@ -5,10 +5,11 @@
   align-items: center;
   gap: 20px;
   box-sizing: border-box;
-  border: 1px solid #dce8e4;
+  border: 1px solid var(--border_color);
   border-radius: 8px;
-  background-color: var(--header-menu_color);
-  padding: 22px 26px;
+  background-color: var(--surface_color);
+  padding: 20px 24px;
+  box-shadow: var(--shadow_soft);
 }
 
 .cardMat__logo {
@@ -38,7 +39,7 @@
 
 .cardMat__content p {
   margin: 0;
-  color: #8aa0ad;
+  color: var(--muted_text_color);
   font-size: 13px;
   font-weight: 600;
   line-height: 1.2;
@@ -54,7 +55,7 @@
   gap: 5px;
   border: 1px solid #bfc9c4;
   border-radius: 8px;
-  background-color: var(--header-menu_color);
+  background-color: var(--surface_color);
   color: var(--text_color);
   font-size: 15px;
   font-weight: 800;
@@ -63,6 +64,15 @@
 
 .cardMat__delete svg {
   color: #8b9691;
+}
+
+html.dark .cardMat__delete {
+  border-color: var(--border_color);
+}
+
+html.dark .cardMat__delete:hover {
+  border-color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
 }
 
 @media (max-width: 520px) {

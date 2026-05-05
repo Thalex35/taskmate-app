@@ -1,20 +1,19 @@
-# 📋 TaskMate
+# TaskMate
 
-Gestionnaire de devoirs & deadlines pour étudiants universitaires.
+Gestionnaire de devoirs et deadlines pour étudiants universitaires.
 
-## 🚀 Stack
+## Stack
 
 - **Frontend** : React.js + React Router + Context API
 - **Stockage** : Supabase
 
-## 👥 Équipe
+## Équipe
 
 - Theodore Louisjuste
 - Shadaie Lozier
 - Rosar
 
-
-## ✨ Fonctionnalités
+## Fonctionnalités
 
 - Inscription et connexion par compte personnel
 - Dashboard avec statistiques et devoirs urgents

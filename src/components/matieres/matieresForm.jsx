@@ -31,7 +31,7 @@ export default function MatieresForm() {
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      setErrorMessage("Utilisateur non connecte.");
+      setErrorMessage("Utilisateur non connecté.");
       setLoading(false);
       return;
     }
@@ -58,7 +58,7 @@ export default function MatieresForm() {
     <div className="newMat">
       <div className="newMat__card">
         <div className="newMat__header">
-          <h1>Nouvelle matiere</h1>
+          <h1>Nouvelle matière</h1>
           <Link to="/matieres" className="newMat__close" aria-label="Annuler">
             X
           </Link>

@@ -1,14 +1,13 @@
 /* ===== DEVOIR CARD ===== */
 
 .devoir-card {
-  background-color: var(--background-menu_color);
-  border: 1px solid var(--header-menu_border_color);
-  border-radius: 12px;
+  background-color: var(--surface_color);
+  border: 1px solid var(--border_color);
+  border-radius: 10px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-family: sans-serif;
   cursor: pointer;
   transition:
     border-color 0.15s ease,
@@ -19,7 +18,7 @@
 .devoir-card:hover,
 .devoir-card:focus-visible {
   border-color: var(--btn_color);
-  box-shadow: 0 8px 20px rgba(44, 134, 122, 0.12);
+  box-shadow: var(--shadow_soft);
   transform: translateY(-1px);
   outline: none;
 }
@@ -137,7 +136,7 @@
 
 .card-date {
   font-size: 13px;
-  color: var(--text_color);
+  color: var(--muted_text_color);
 }
 
 .card-jours {
@@ -174,6 +173,65 @@
 .card-termine-label {
   text-align: center;
   font-size: 13px;
-  color: #065928;
-  font-weight: 500;
+  color: var(--btn_color);
+  font-weight: 700;
+}
+
+html.dark .card-icon-btn {
+  border-color: var(--border_color);
+  background-color: #172233;
+  color: #86efac;
+}
+
+html.dark .card-icon-btn:hover,
+html.dark .card-icon-btn:focus-visible {
+  border-color: var(--btn_color);
+  background-color: rgba(34, 197, 94, 0.12);
+}
+
+html.dark .card-icon-delete {
+  color: #fca5a5;
+}
+
+html.dark .card-icon-delete:hover,
+html.dark .card-icon-delete:focus-visible {
+  border-color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.12);
+}
+
+html.dark .badge-matiere {
+  background-color: rgba(96, 165, 250, 0.16);
+  color: #bfdbfe;
+}
+
+html.dark .badge-haute {
+  background-color: rgba(248, 113, 113, 0.16);
+  color: #fecaca;
+}
+
+html.dark .badge-moyenne {
+  background-color: rgba(245, 158, 11, 0.16);
+  color: #fde68a;
+}
+
+html.dark .badge-basse,
+html.dark .badge-termine,
+html.dark .card-jours {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+}
+
+html.dark .badge-afaire {
+  background-color: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+}
+
+html.dark .badge-encours {
+  background-color: rgba(59, 130, 246, 0.16);
+  color: #93c5fd;
+}
+
+html.dark .card-jours.urgent {
+  background-color: rgba(248, 113, 113, 0.14);
+  color: #fca5a5;
 }

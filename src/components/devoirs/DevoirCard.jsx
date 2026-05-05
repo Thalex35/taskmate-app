@@ -12,7 +12,7 @@ export default function DevoirCard({
     devoir;
 
   const statutClass =
-    statut === "Termine"
+    statut === "Terminé"
       ? "badge badge-termine"
       : statut === "En cours"
         ? "badge badge-encours"
@@ -29,7 +29,7 @@ export default function DevoirCard({
     joursRestants === 0 ? "Aujourd'hui !" : `${joursRestants}j restants`;
 
   const joursClass = joursRestants <= 2 ? "card-jours urgent" : "card-jours";
-  const statutTexte = statut === "Termine" ? "Termine" : statut;
+  const statutTexte = statut === "Terminé" ? "Terminé" : statut;
 
   return (
     <article
@@ -85,7 +85,7 @@ export default function DevoirCard({
         <span className={joursClass}>{joursTexte}</span>
       </div>
 
-      {statut !== "Termine" ? (
+      {statut !== "Terminé" ? (
         <button
           className="card-btn-terminer"
           onClick={(event) => {
@@ -93,10 +93,10 @@ export default function DevoirCard({
             onMarquerTermine(id);
           }}
         >
-          Marquer comme termine
+          Marquer comme terminé
         </button>
       ) : (
-        <div className="card-termine-label">Termine</div>
+        <div className="card-termine-label">Terminé</div>
       )}
     </article>
   );

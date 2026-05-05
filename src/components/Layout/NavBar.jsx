@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { ThemeContext } from "../../context/theme";
 import { Link } from "react-router-dom";
 import { Moon, Sun, User } from "lucide-react";
+import { ThemeContext } from "../../context/theme";
 
 import "../../styles/NavBar.css";
 
@@ -22,10 +22,7 @@ export default function NavBar({
 
       <div className="navbar-action">
         {showMode && (
-          <button
-            className="navbar-btn-mode"
-            onClick={toggleTheme}
-          >
+          <button className="navbar-btn-mode" onClick={toggleTheme}>
             {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
             {isDarkMode ? "Mode clair" : "Mode sombre"}
           </button>
@@ -37,12 +34,12 @@ export default function NavBar({
           </Link>
         ) : ShowAddBtn ? (
           <Link to="/new-devoir" className="navbar-btn-nouveau">
-            + Nouveau Devoir
+            + Nouveau devoir
           </Link>
         ) : null}
 
         <Link to="/profile" className="navbar-btn-profile">
-          <User size={24} color="white" />
+          <User size={24} />
         </Link>
       </div>
     </nav>

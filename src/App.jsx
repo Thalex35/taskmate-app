@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout.jsx";
-import PretectedRoute from "./components/Layout/PretectedRoute.jsx";
+import ProtectedRoute from "./components/Layout/ProtectedRoute.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Devoirs from "./pages/Devoirs.jsx";
 import Login from "./pages/Login.jsx";
@@ -19,41 +19,41 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout>
                 <Dashboard />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/devoirs"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout>
                 <Devoirs />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/matieres"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout>
                 <Matieres />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout ShowAddBtn={false} showLogout={true} showMode={false}>
                 <Profile />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route path="/login" element={<Login />} />
@@ -61,21 +61,21 @@ export default function App() {
         <Route
           path="/new-devoir"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout ShowAddBtn={false} showMode={false}>
                 <NewDevoir />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/new-matieres"
           element={
-            <PretectedRoute>
+            <ProtectedRoute>
               <Layout ShowAddBtn={false} showMode={false}>
                 <NewMatieres />
               </Layout>
-            </PretectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route path="*" element={<Navigate to="/login" replace />} />

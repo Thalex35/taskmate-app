@@ -14,7 +14,7 @@ const menuSection = [
 
   {
     label: "Organisation",
-    items: [{ id: "matieres", label: "Matieres", path: "/matieres" }],
+    items: [{ id: "matieres", label: "Matières", path: "/matieres" }],
   },
 
   {
@@ -79,7 +79,7 @@ export default function Menu() {
           <p className="menu-user-name">
             {user?.user_metadata?.first_name || "Utilisateur"}
           </p>
-          <p className="menu-user-role">Etudiant</p>
+          <p className="menu-user-role">Étudiant</p>
         </div>
       </div>
     </aside>

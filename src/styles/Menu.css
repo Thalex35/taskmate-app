@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   padding-top: 28px;
-  font-family: sans-serif;
 }
 
 .menu-nav {
@@ -34,9 +33,9 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  min-height: 42px;
-  padding: 10px 14px;
-  border-radius: 10px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text_color);
   font-size: 15px;
@@ -49,12 +48,13 @@
 }
 
 .menu-item:hover {
-  background-color: var(--logo_background_color);
+  background-color: var(--surface_hover_color);
 }
 
 .menu-item.active {
-  background-color: var(--btn_color);
-  color: #ffffff;
+  background-color: rgba(34, 197, 94, 0.16);
+  color: var(--btn_color);
+  box-shadow: inset 3px 0 0 var(--btn_color);
 }
 
 .menu-dot {
@@ -102,7 +102,7 @@
 }
 
 html.dark .menu-dot {
-  background-color: #6b7280;
+  background-color: #64748b;
 }
 
 html.dark .menu-user-role {

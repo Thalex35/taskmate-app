@@ -35,10 +35,10 @@ function afficherPriorite(priorite) {
 function afficherStatut(statut) {
   const value = normaliserStatut(statut);
 
-  if (value === "termine") return "Termine";
+  if (value === "termine") return "Terminé";
   if (value === "en_cours") return "En cours";
 
-  return "A faire";
+  return "À faire";
 }
 
 function formatUrgence(joursRestants) {
@@ -65,11 +65,15 @@ export default function Dashboard() {
     async function fetchUser() {
       const { data, error } = await supabase.auth.getUser();
 
-      if (error) {
-        console.error("Erreur getUser:", error.message);
-      } else {
-        setUser(data.user);
+      if (error || !data.user) {
+        if (error) {
+          console.error("Erreur getUser:", error.message);
+        }
+        setLoading(false);
+        return;
       }
+
+      setUser(data.user);
 
       const { data: devoirsData, error: devoirsError } = await supabase
         .from("devoirs")
@@ -85,6 +89,7 @@ export default function Dashboard() {
           )
         `,
         )
+        .eq("user_id", data.user.id)
         .order("date_limite", { ascending: true });
 
       if (devoirsError) {
@@ -114,7 +119,7 @@ export default function Dashboard() {
       ...devoir,
       joursRestants: calculerJoursRestants(devoir.date_limite),
       prioriteLabel: afficherPriorite(devoir.priorite),
-      matiereNom: devoir.matieres?.nom || "Sans matiere",
+      matiereNom: devoir.matieres?.nom || "Sans matière",
       statutLabel: afficherStatut(devoir.statut),
     }))
     .filter(
@@ -141,7 +146,7 @@ export default function Dashboard() {
           <span>{totalDevoirs}</span>
         </div>
         <div className="cardDevoir">
-          <p>A FAIRE</p>
+          <p>À FAIRE</p>
           <span>{devoirsAFaire}</span>
         </div>
         <div className="cardDevoir">
@@ -149,7 +154,7 @@ export default function Dashboard() {
           <span>{devoirsEnCours}</span>
         </div>
         <div className="cardDevoir">
-          <p>TERMINE</p>
+          <p>TERMINÉ</p>
           <span>{devoirsTermines}</span>
         </div>
       </div>
