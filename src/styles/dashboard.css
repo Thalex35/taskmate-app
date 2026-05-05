@@ -32,14 +32,14 @@
 
 .cardDevoir {
   min-height: 140px;
-  border: 1px solid #57b99b;
+  border: 1px solid var(--btn_color);
   border-radius: 18px;
   background-color: var(--dashboard_cardNumber_color);
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #030804;
+  color: var(--text_color);
   font-weight: 700;
   text-align: left;
 }
@@ -184,14 +184,19 @@
   border: none;
   border-radius: 8px;
   background: var(--btn_color);
-  color: #ffffff;
+  color: var(--btn_finish_text_color);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
 }
 
 .btn_see:hover {
-  background: #246f66;
+  opacity: 0.9;
+}
+
+html.dark .cardDevoir {
+  border-color: var(--btn_color);
+  background-color: var(--background_dashboard_card);
 }
 
 @media (max-width: 900px) {

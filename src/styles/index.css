@@ -18,27 +18,54 @@
   --btn_color: #2c867a;
   --btn_annuler: #f7fffe;
   --all_input_color: #e5fffe;
+  --text_color: #030804;
 
   /* Dashboard */
   --dashboard_cardNumber_color: #5dcaab;
-  --background_card_color: #a3c7b8;
+  --background_dashboard_card: #a3c7b8;
 
   /* card devoir */
-  --text_color: #030804;
   --dateLimit_text_color: #870808;
   --dateLimit_text_background: #4170dd;
   --matiere_text_color: #d7def0;
-  --priorite_text_color: #9a7005;
-  --priorite_text_color: #e9e9c1;
-  --status_text_color: #063919;
-  --status_text_color: #effef5;
+  --priorite_text_color_low: #e9e9c1;
+  --priorite_text_color_high: #9a7005;
+  --status_text_color_done: #063919;
+  --status_text_color_todo: #effef5;
   --btn_finish_background_color: #f1fffe;
   --btn_finish_text_color: #030804;
   --btn_finish_border_color: #008355;
 }
 
+html.dark {
+  --pricipal_color: #0a0f1a;
+  --background_card_color: #1a2332;
+  --background_dashboard_card: #1a2332;
+  --btn_color: #22c55e;
+  --btn_annuler: #1e293b;
+  --all_input_color: #1e293b;
+  --header-menu_color: #111827;
+  --header-menu_border_color: #22c55e;
+  --background-menu_color: #0f172a;
+  --logo_background_color: #1e293b;
+  --logo_text_color: #22c55e;
+  --profile_color: linear-gradient(135deg, #22c55e, #16a34a);
+  --dashboard_cardNumber_color: #1d4ed8;
+  --text_color: #f8fafc;
+  --dateLimit_text_color: #f59e0b;
+  --dateLimit_text_background: #1e3a8a;
+  --matiere_text_color: #60a5fa;
+  --priorite_text_color_low: #fef3c7;
+  --priorite_text_color_high: #f59e0b;
+  --status_text_color_done: #22c55e;
+  --status_text_color_todo: #334155;
+  color-scheme: dark;
+}
+
 body {
   background-color: var(--pricipal_color);
+  color: var(--text_color);
+  transition: background-color 0.3s ease;
 }
 
 .body_pages {

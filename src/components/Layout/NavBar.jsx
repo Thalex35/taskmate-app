@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/theme";
 import { Link } from "react-router-dom";
 import { Moon, Sun, User } from "lucide-react";
 
@@ -9,7 +10,8 @@ export default function NavBar({
   showLogout = false,
   showMode = true,
 }) {
-  const [modeSombre, setModeSombre] = useState(false);
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const isDarkMode = theme === "dark";
 
   return (
     <nav className="navbar">
@@ -22,10 +24,10 @@ export default function NavBar({
         {showMode && (
           <button
             className="navbar-btn-mode"
-            onClick={() => setModeSombre(!modeSombre)}
+            onClick={toggleTheme}
           >
-            {modeSombre ? <Sun size={16} /> : <Moon size={16} />}
-            {modeSombre ? "Mode clair" : "Mode sombre"}
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+            {isDarkMode ? "Mode clair" : "Mode sombre"}
           </button>
         )}
 

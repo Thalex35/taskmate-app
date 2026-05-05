@@ -10,8 +10,8 @@
   justify-content: space-between;
   min-height: var(--navbar-height);
   padding: 12px 100px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0f2ee;
+  background-color: var(--header-menu_color);
+  border-bottom: 1px solid var(--header-menu_border_color);
 }
 
 .navbar-logo {
@@ -24,20 +24,15 @@
   border-radius: 12px;
   font-size: 25px;
   font-weight: 700;
-  color: black;
-}
-
-.navbar-logo-task,
-.navbar-logo-mate {
-  line-height: 1;
+  color: var(--logo_text_color);
 }
 
 .navbar-logo-task {
-  color: #000000;
+  color: var(--logo_text_color);
 }
 
 .navbar-logo-mate {
-  color: #1d9e75;
+  color: var(--btn_color);
 }
 
 .navbar-action {
@@ -54,35 +49,24 @@
   height: 40px;
   padding: 0 16px;
   border-radius: 8px;
-  border: 1px solid #1d9e75;
+  border: 1px solid var(--btn_color);
   background: transparent;
-  color: #1d9e75;
+  color: var(--btn_color);
   font-size: 14px;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .navbar-btn-mode:hover {
-  background-color: #e8f7f3;
+  background-color: var(--logo_background_color);
 }
 
-.navbar-btn-logout {
+.navbar-btn-logout, .navbar-btn-nouveau {
   padding: 10px 16px;
   border-radius: 8px;
-  background-color: #1d9e75;
-  color: #ffffff;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.15s ease;
-}
-
-.navbar-btn-nouveau {
-  padding: 10px 16px;
-  border-radius: 8px;
-  background-color: #1d9e75;
-  color: #ffffff;
+  background-color: var(--btn_color);
+  color: white;
   font-size: 14px;
   text-decoration: none;
   font-weight: 500;
@@ -90,7 +74,7 @@
 }
 
 .navbar-btn-nouveau:hover {
-  background-color: #178a65;
+  opacity: 0.9;
 }
 
 .navbar-btn-profile {
@@ -101,10 +85,22 @@
   height: 40px;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid #ffffff;
-  background-color: #178a65;
-  color: #ffffff;
-  font-size: 14px;
+  background-color: var(--btn_color);
+  color: white;
   cursor: pointer;
   transition: background 0.15s ease;
+}
+
+html.dark .navbar-btn-profile {
+  border-color: var(--background-menu_color);
+  background-color: var(--btn_color);
+}
+
+/* Dark mode overrides */
+html.dark .navbar-logo-task {
+  color: var(--logo_text_color);
+}
+
+html.dark .navbar-logo-mate {
+  color: var(--btn_color);
 }
