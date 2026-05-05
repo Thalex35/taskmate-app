@@ -38,21 +38,14 @@
   padding: 10px 14px;
   border-radius: 10px;
   background: transparent;
-  feature/profile-theme
   color: var(--text_color);
-  font-size: 14px;
-  text-decoration: none;
-  margin-bottom: 2px;
-  transition: background 0.15s ease, color 0.15s ease;
-
-  color: #333333;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   margin-bottom: 4px;
   transition:
     background 0.15s ease,
-    color 0.15s ease
+    color 0.15s ease;
 }
 
 .menu-item:hover {
@@ -61,7 +54,7 @@
 
 .menu-item.active {
   background-color: var(--btn_color);
-  color: white;
+  color: #ffffff;
 }
 
 .menu-dot {
@@ -69,33 +62,24 @@
   height: 6px;
   border-radius: 50%;
   background-color: #bbbbbb;
+  flex-shrink: 0;
 }
 
 .menu-profil {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
-  border-top: 1px solid var(--header-menu_border_color);
   padding: 18px;
-  border-top: 1px solid #e0f2ee;
+  border-top: 1px solid var(--header-menu_border_color);
   margin-top: auto;
 }
 
 .menu-avatar {
-feature/profile-theme
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  background-color: var(--btn_color);
-  color: white;
-
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background-color: #1d9e75;
+  background-color: var(--btn_color);
   color: #ffffff;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,6 +107,8 @@ html.dark .menu-dot {
 
 html.dark .menu-user-role {
   color: #9ca3af;
+}
+
 @media (max-width: 900px) {
   .menu {
     width: 220px;

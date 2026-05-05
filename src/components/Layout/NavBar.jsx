@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../../context/theme";
 import { Link } from "react-router-dom";
 import { Moon, Sun, User } from "lucide-react";
 
