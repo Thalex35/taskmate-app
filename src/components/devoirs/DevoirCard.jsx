@@ -46,7 +46,10 @@ export default function DevoirCard({
     >
       <div className="card-header">
         <h3 className="card-titre">{titre}</h3>
-        <div className="card-icons" onClick={(event) => event.stopPropagation()}>
+        <div
+          className="card-icons"
+          onClick={(event) => event.stopPropagation()}
+        >
           <button
             type="button"
             className="card-icon-btn"
@@ -76,7 +79,7 @@ export default function DevoirCard({
 
       <div className="card-footer">
         <span className="card-date">
-          {new Date(dateLimit).toLocaleDateString("fr-FR", {
+          {new Date(`${dateLimit}T00:00:00`).toLocaleDateString("fr-FR", {
             day: "numeric",
             month: "short",
             year: "numeric",
